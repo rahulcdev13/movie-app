@@ -25,7 +25,7 @@ const MovieDetails = () => {
   let minutes = totalMinutes % 60;
   let movieLength = hours + "h:" + minutes + "m";
 
-  const director = moviewDetails?.production_companies;
+  const cast = moviewDetails?.production_companies;
   const generes = moviewDetails?.genres;
 
   useEffect(() => {
@@ -75,11 +75,11 @@ const MovieDetails = () => {
               {release_date} | {movieLength}
             </p>
             <p>
-              <span style={{ fontWeight: "bold" }}> Director : </span>
-              {director?.map((item) => {
+              <span style={{ fontWeight: "bold" }}> Cast : </span>
+              {cast?.map((item) => {
                 return (
                   <>
-                    <span key={item?.id}> {item?.name}</span>
+                    <span key={item?.id}> ◾ {item?.name}</span>
                   </>
                 );
               })}

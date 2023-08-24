@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { MOVIE_POSTER } from "../utils/Constants";
-import {BiArrowBack} from "react-icons/bi";
+import { BiArrowBack } from "react-icons/bi";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -31,10 +31,14 @@ const MovieDetails = () => {
   useEffect(() => {
     console.log("useEffect renedered for movie details..");
     const getMovieDetails = async () => {
-      const response = await fetch(MOVIE_DETAILS);
-      const result = await response.json();
-      console.log(result);
-      setMoviewDetails(result);
+      try {
+        const response = await fetch(MOVIE_DETAILS);
+        const result = await response.json();
+        console.log(result);
+        setMoviewDetails(result);
+      } catch (error) {
+        console.log(error);
+      }
     };
     getMovieDetails();
   }, []);
@@ -45,7 +49,7 @@ const MovieDetails = () => {
         className="btn btn-danger btn-sm mb-2 font-bold"
         onClick={() => navigate(-1)}
       >
-       <BiArrowBack /> Back To home
+        <BiArrowBack /> Back To home
       </button>
       <div className="movie-details">
         <div className="movie-img">

@@ -3,18 +3,18 @@ import { useState, useEffect } from "react";
 import { MOVIE_API } from "../utils/Constants";
 import { MOVIE_POSTER } from "../utils/Constants";
 import { Link } from "react-router-dom";
-import {FiSearch} from "react-icons/fi";
+import { FiSearch } from "react-icons/fi";
 
 const MovieList = () => {
+  const [movie, setMovie] = useState([]);
   const [searchVal, setSearchVal] = useState("");
-  const [movie, setmovie] = useState([]);
 
   useEffect(() => {
     const fetchmovieApi = async () => {
       try {
         const response = await fetch(MOVIE_API);
         const json = await response.json();
-        setmovie(json);
+        setMovie(json);
       } catch (error) {
         console.log(error);
       }
@@ -24,10 +24,15 @@ const MovieList = () => {
 
   // Filter the movies data according input type
   const handleSearchClick = () => {
-    const filterBySearch = movie?.results?.filter((item) =>
-      item?.original_title.toLowerCase().includes(searchVal.toLowerCase())
-    );
-    console.log(setmovie(filterBySearch));
+    try {
+      const filterBySearch = movie.results.filter((item) =>
+        item.original_title.toLowerCase().includes(searchVal.toLowerCase())
+      );
+      console.log(filterBySearch); // got it filter value
+      setMovie(filterBySearch);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -51,7 +56,7 @@ const MovieList = () => {
                 type="submit"
                 onClick={handleSearchClick}
               >
-                <FiSearch /> 
+                <FiSearch />
               </button>
             </div>
           </div>
@@ -61,7 +66,7 @@ const MovieList = () => {
         {movie?.results?.map((items) => {
           return (
             <>
-              <div className="col-md-3 pt-3 pb-7" key={items?.id}>
+              <div key={items.id} className="col-md-3 pt-3 pb-7">
                 <div className="card-groups">
                   <Link
                     to={"MovieDetails/" + items?.id}
